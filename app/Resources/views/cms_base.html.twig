@@ -50,7 +50,10 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-            	<a href="/" style="text-decoration:none;color:#fff;">HOME</a> <!-- add path -->
+            	<a href="/" style="text-decoration:none;color:#fff;">
+                    <i class="fa fa-fw fa-home" aria-hidden="true"></i>
+                    HOME
+                </a> <!-- add path -->
             </li>
                 
         </ul>
@@ -66,7 +69,11 @@
             <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
     </div>
-
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
     {% block body %}{% endblock %}
 </div>
     <!-- /.container-fluid-->

@@ -2,6 +2,16 @@
 
 {% block body %}
 
-    create person
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Add person</h1>
+                {{ form_start(personForm) }}
+                    {{ form_widget(personForm) }}
+                    <button type="submit" class="btn btn-primary">Add</button>
+                {{ form_end(personForm) }}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

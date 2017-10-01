@@ -2,6 +2,16 @@
 
 {% block body %}
 
-    create movie
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Add movie</h1>
+                {{ form_start(movieForm) }}
+                    {{ form_widget(movieForm) }}
+                    <button type="submit" class="btn btn-primary">Add</button>
+                {{ form_end(movieForm) }}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

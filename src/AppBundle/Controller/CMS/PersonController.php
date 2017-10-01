@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller\CMS;
 
+use AppBundle\Form\PersonFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,26 @@ class PersonController extends Controller
      */
     public function addPersonAction(Request $request)
     {
-        return $this->render('cms/person/create.html.twig');
+        $form = $this->createForm(PersonFormType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $person = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($person);
+            $em->flush();
+
+            $this->addFlash('success', 'Person created');
+
+            return $this->redirectToRoute('cms');
+        }
+
+        return $this->render('cms/person/create.html.twig',[
+            'personForm' => $form->createView()
+        ]);
     }
     /**
      * @Route("/cms/person/edit/{id}", name="cms_edit_person")

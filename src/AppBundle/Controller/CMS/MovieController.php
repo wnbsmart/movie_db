@@ -8,6 +8,8 @@
 
 namespace AppBundle\Controller\CMS;
 
+use AppBundle\Entity\Movie;
+use AppBundle\Form\MovieFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +22,26 @@ class MovieController extends Controller
      */
     public function addMovieAction(Request $request)
     {
-        return $this->render('cms/movie/create.html.twig');
+        $form = $this->createForm(MovieFormType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $movie = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($movie);
+            $em->flush();
+
+            $this->addFlash('success', 'Movie created');
+
+            return $this->redirectToRoute('cms');
+        }
+
+        return $this->render('cms/movie/create.html.twig',[
+            'movieForm' => $form->createView()
+        ]);
     }
     /**
      * @Route("/cms/movie/edit/{id}", name="cms_edit_movie")
@@ -44,22 +65,24 @@ class MovieController extends Controller
     }
 
     /**
-     * @Route("/movie/delete/{id}", name="cms_delete_movie")
-     * @Method("GET")
+     * @Route("/cms/movie/delete/{id}", name="cms_delete_movie")
      */
-    public function deleteMovieAction($id, Request $request)
+    public function deleteMovieAction($id)
     {
-        $movie = $this->getDoctrine()
-            ->getRepository('AppBundle\Entity\Movie')
-            ->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $movie = $em->getRepository('AppBundle:Movie')->find($id);
 
         if (!$movie) {
             throw $this->createNotFoundException(
                 'No movie found for id '.$id
             );
         }
-        return $this->render('cms/movie/delete.html.twig', array(
-            'movie' => $movie
-        ));
+
+        $this->addFlash('success', 'Movie deleted');
+
+        $em->remove($movie);
+        $em->flush();
+
+        return $this->redirectToRoute('cms');
     }
 }
