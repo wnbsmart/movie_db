@@ -23,6 +23,9 @@
                     <td>{{ movie.year }}</td>
                     <td>{{ movie.description }}</td>
                     <td>
+                        <a href="{{ path('cms_show_movie', {'id': movie.id}) }}" class="btn btn-success">View</a>
+                    </td>
+                    <td>
                         <a href="{{ path('cms_edit_movie', {'id': movie.id}) }}" class="btn btn-primary">Edit</a>
                     </td>
                     <td>

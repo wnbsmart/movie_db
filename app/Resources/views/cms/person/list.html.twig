@@ -11,6 +11,7 @@
                 <th>Name</th>
                 <th>Date of birth</th>
                 <th>Number of (acting, directing etc.)</th> <!-- Add !! -->
+                <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -22,6 +23,9 @@
                     <td>{{ person.name }}</td>
                     <td>{{ person.dateOfBirth|date('d. m. Y.') }}</td>
                     <td>{{ person.id }}</td> <!-- FIX -->
+                    <td>
+                        <a href="{{ path('cms_show_person', {'id': person.id}) }}" class="btn btn-success">View</a>
+                    </td>
                     <td>
                         <a href="{{ path('cms_edit_person', {'id': person.id}) }}" class="btn btn-primary">Edit</a>
                     </td>

@@ -101,4 +101,22 @@ class PersonController extends Controller
 
         return $this->redirectToRoute('cms_list_person');
     }
+    /**
+     * @Route("/cms/person/{id}", name="cms_show_person")
+     */
+    public function showMovieAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $person = $em->getRepository('AppBundle:Person')->find($id);
+
+        if (!$person) {
+            throw $this->createNotFoundException(
+                'No person found for id '.$id
+            );
+        }
+
+        return $this->render('cms/person/show.html.twig', [
+            'person' => $person
+        ]);
+    }
 }

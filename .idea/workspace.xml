@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a25dd4a2-93cf-4675-9cb7-8acbcccecf84" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/cms/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/cms/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/cms/movie/edit.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/cms/movie/edit.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/cms/movie/list.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/cms/movie/list.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/cms/person/edit.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/cms/person/edit.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/cms/person/list.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/cms/person/list.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/CMS/MovieController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/CMS/MovieController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/CMS/PersonController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/CMS/PersonController.php" />
@@ -36,8 +32,8 @@
       <file leaf-file-name="PersonController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CMS/PersonController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="66" column="9" lean-forward="false" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+            <state relative-caret-position="313">
+              <caret line="114" column="14" lean-forward="false" selection-start-line="114" selection-start-column="14" selection-end-line="114" selection-end-column="14" />
               <folding>
                 <element signature="e#127#155#0#PHP" expanded="true" />
                 <element signature="e#587#605#1#PHP" expanded="true" />
@@ -45,21 +41,61 @@
                 <element signature="e#1368#1397#0#PHP" expanded="true" />
                 <element signature="e#2112#2139#0#PHP" expanded="true" />
                 <element signature="e#2427#2445#1#PHP" expanded="true" />
+                <element signature="e#2985#3003#1#PHP" expanded="true" />
+                <element signature="e#3193#3220#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MovieController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="list.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/movie/list.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" column="103" lean-forward="false" selection-start-line="25" selection-start-column="96" selection-end-line="25" selection-end-column="103" />
+              <folding>
+                <element signature="e#12#30#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MovieController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CMS/MovieController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="58" column="60" lean-forward="false" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
+            <state relative-caret-position="262">
+              <caret line="116" column="9" lean-forward="false" selection-start-line="116" selection-start-column="9" selection-end-line="116" selection-end-column="9" />
               <folding>
                 <element signature="e#127#154#0#PHP" expanded="true" />
                 <element signature="e#721#747#0#PHP" expanded="true" />
                 <element signature="e#2148#2174#0#PHP" expanded="true" />
                 <element signature="e#2458#2475#1#PHP" expanded="true" />
+                <element signature="e#3008#3025#1#PHP" expanded="true" />
+                <element signature="e#3213#3239#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/movie/show.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+              <folding>
+                <element signature="e#12#30#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/person/show.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+              <folding>
+                <element signature="e#12#30#0#Twig" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -102,12 +138,14 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/CMSController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/cms_base.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/cms/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/cms/person/list.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/cms/movie/list.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CMS/PersonController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/cms/person/edit.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/cms/movie/edit.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/cms/movie/list.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/cms/person/list.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/cms/movie/show.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/CMS/MovieController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CMS/PersonController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/cms/person/show.html.twig" />
       </list>
     </option>
   </component>
@@ -196,6 +234,15 @@
             <path>
               <item name="movie_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="movie_db" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="cms" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="person" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="movie_db" type="b2602c69:ProjectViewProjectNode" />
+              <item name="movie_db" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -273,12 +320,12 @@
       <updated>1506682348393</updated>
       <workItem from="1506682350368" duration="19906000" />
       <workItem from="1506788326310" duration="5616000" />
-      <workItem from="1506858335134" duration="11259000" />
+      <workItem from="1506858335134" duration="11787000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36781000" />
+    <option name="totallyTimeSpent" value="37309000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -357,6 +404,8 @@
             <element signature="e#721#747#0#PHP" expanded="true" />
             <element signature="e#2148#2174#0#PHP" expanded="true" />
             <element signature="e#2458#2475#1#PHP" expanded="true" />
+            <element signature="e#3008#3025#1#PHP" expanded="true" />
+            <element signature="e#3213#3239#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -398,6 +447,8 @@
             <element signature="e#721#747#0#PHP" expanded="true" />
             <element signature="e#2148#2174#0#PHP" expanded="true" />
             <element signature="e#2458#2475#1#PHP" expanded="true" />
+            <element signature="e#3008#3025#1#PHP" expanded="true" />
+            <element signature="e#3213#3239#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -511,26 +562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/person/list.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="28" column="78" lean-forward="false" selection-start-line="28" selection-start-column="78" selection-end-line="28" selection-end-column="78" />
-          <folding>
-            <element signature="e#12#30#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/movie/list.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="28" column="58" lean-forward="false" selection-start-line="28" selection-start-column="58" selection-end-line="28" selection-end-column="58" />
-          <folding>
-            <element signature="e#12#30#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/person/edit.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -573,10 +604,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/person/list.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="26" column="105" lean-forward="false" selection-start-line="26" selection-start-column="105" selection-end-line="26" selection-end-column="105" />
+          <folding>
+            <element signature="e#12#30#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/movie/list.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="103" lean-forward="false" selection-start-line="25" selection-start-column="96" selection-end-line="25" selection-end-column="103" />
+          <folding>
+            <element signature="e#12#30#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CMS/MovieController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="116" column="9" lean-forward="false" selection-start-line="116" selection-start-column="9" selection-end-line="116" selection-end-column="9" />
+          <folding>
+            <element signature="e#127#154#0#PHP" expanded="true" />
+            <element signature="e#721#747#0#PHP" expanded="true" />
+            <element signature="e#2148#2174#0#PHP" expanded="true" />
+            <element signature="e#2458#2475#1#PHP" expanded="true" />
+            <element signature="e#3008#3025#1#PHP" expanded="true" />
+            <element signature="e#3213#3239#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CMS/PersonController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="66" column="9" lean-forward="false" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+        <state relative-caret-position="313">
+          <caret line="114" column="14" lean-forward="false" selection-start-line="114" selection-start-column="14" selection-end-line="114" selection-end-column="14" />
           <folding>
             <element signature="e#127#155#0#PHP" expanded="true" />
             <element signature="e#587#605#1#PHP" expanded="true" />
@@ -584,19 +650,28 @@
             <element signature="e#1368#1397#0#PHP" expanded="true" />
             <element signature="e#2112#2139#0#PHP" expanded="true" />
             <element signature="e#2427#2445#1#PHP" expanded="true" />
+            <element signature="e#2985#3003#1#PHP" expanded="true" />
+            <element signature="e#3193#3220#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CMS/MovieController.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/movie/show.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="58" column="60" lean-forward="false" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
+        <state relative-caret-position="85">
+          <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
           <folding>
-            <element signature="e#127#154#0#PHP" expanded="true" />
-            <element signature="e#721#747#0#PHP" expanded="true" />
-            <element signature="e#2148#2174#0#PHP" expanded="true" />
-            <element signature="e#2458#2475#1#PHP" expanded="true" />
+            <element signature="e#12#30#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/cms/person/show.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding>
+            <element signature="e#12#30#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>

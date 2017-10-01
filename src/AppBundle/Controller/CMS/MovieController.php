@@ -102,4 +102,22 @@ class MovieController extends Controller
 
         return $this->redirectToRoute('cms_list_movie');
     }
+    /**
+     * @Route("/cms/movie/{id}", name="cms_show_movie")
+     */
+    public function showMovieAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $movie = $em->getRepository('AppBundle:Movie')->find($id);
+
+        if (!$movie) {
+            throw $this->createNotFoundException(
+                'No movie found for id '.$id
+            );
+        }
+
+        return $this->render('cms/movie/show.html.twig', [
+            'movie' => $movie
+        ]);
+    }
 }
