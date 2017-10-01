@@ -27,11 +27,67 @@ class Role
      */
     private $name;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Person")
      */
-    private $person_id;
+    private $person;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Movie")
      */
-    private $movie_id;
+    private $movie;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
+
+    /**
+     * @param mixed $person
+     */
+    public function setPerson(Person $person)
+    {
+        $this->person = $person;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMovie()
+    {
+        return $this->movie;
+    }
+
+    /**
+     * @param mixed $movie
+     */
+    public function setMovie(Movie $movie)
+    {
+        $this->movie = $movie;
+    }
 }
