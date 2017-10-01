@@ -1,0 +1,38 @@
+{% extends 'cms_base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>List of movies</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Movie</th>
+                <th>Year</th>
+                <th>Description</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for movie in movies %}
+                <tr>
+                    <td>{{ movie.imagePath }}</td>
+                    <td>{{ movie.name }}</td>
+                    <td>{{ movie.year }}</td>
+                    <td>{{ movie.description }}</td>
+                    <td>
+                        <a href="/cms/movie/edit/{{ movie.id}}" class="btn btn-primary">Edit</a>
+                    </td>
+                    <td>
+                        <a href="/cms/movie/delete/{{ movie.id}}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

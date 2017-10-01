@@ -19,11 +19,6 @@ class CMSController extends Controller
      */
     public function indexAction()
     {
-        $movies = $this->getDoctrine()
-            ->getRepository('AppBundle\Entity\Movie')
-            ->findAll();
-        return $this->render('cms/index.html.twig', array(
-            'movies' => $movies
-        ));
+        return $this->render('cms/index.html.twig');
     }
 }

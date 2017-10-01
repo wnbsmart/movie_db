@@ -1,0 +1,38 @@
+{% extends 'cms_base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>List of persons</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Date of birth</th>
+                <th>Number of (acting, directing etc.)</th> <!-- Add !! -->
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for person in persons %}
+                <tr>
+                    <td>{{ person.imagePath }}</td>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.dateOfBirth|date('d. m. Y.') }}</td>
+                    <td>{{ person.id }}</td> <!-- FIX -->
+                    <td>
+                        <a href="/cms/person/edit/{{ person.id}}" class="btn btn-primary">Edit</a>
+                    </td>
+                    <td>
+                        <a href="/cms/person/delete/{{ person.id}}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

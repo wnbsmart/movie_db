@@ -18,6 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
 class MovieController extends Controller
 {
     /**
+     * @Route("/cms/movie/list", name="cms_list_movie")
+     */
+    public function listMovieAction()
+    {
+        $movies = $this->getDoctrine()
+            ->getRepository('AppBundle\Entity\Movie')
+            ->findAll();
+        return $this->render('cms/movie/list.html.twig', array(
+            'movies' => $movies
+        ));
+    }
+    /**
      * @Route("/cms/movie/create", name="cms_create_movie")
      */
     public function addMovieAction(Request $request)
@@ -36,7 +48,7 @@ class MovieController extends Controller
 
             $this->addFlash('success', 'Movie created');
 
-            return $this->redirectToRoute('cms');
+            return $this->redirectToRoute('cms_list_movie');
         }
 
         return $this->render('cms/movie/create.html.twig',[
@@ -63,7 +75,6 @@ class MovieController extends Controller
             'movie' => $movie
         ));
     }
-
     /**
      * @Route("/cms/movie/delete/{id}", name="cms_delete_movie")
      */
@@ -83,6 +94,6 @@ class MovieController extends Controller
         $em->remove($movie);
         $em->flush();
 
-        return $this->redirectToRoute('cms');
+        return $this->redirectToRoute('cms_list_movie');
     }
 }

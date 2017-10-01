@@ -28,17 +28,33 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-                <a class="nav-link" href="{{ path('cms_create_movie') }}">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Movie">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMovies" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-film"></i>
-                    <span class="nav-link-text">Add movie</span>
+                    <span class="nav-link-text">Movies</span>
                 </a>
+                <ul class="sidenav-second-level collapse" id="collapseMovies">
+                    <li>
+                        <a href="{{ path('cms_list_movie') }}">List</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('cms_create_movie') }}">Add new</a>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-                <a class="nav-link" href="{{ path('cms_create_person') }}">
-                    <i class="fa fa-fw fa-user-plus"></i>
-                    <span class="nav-link-text">Add person</span>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Person">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsePersons" data-parent="#exampleAccordion">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span class="nav-link-text">Persons</span>
                 </a>
+                <ul class="sidenav-second-level collapse" id="collapsePersons">
+                    <li>
+                        <a href="{{ path('cms_list_person') }}">List</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('cms_create_person') }}">Add new</a>
+                    </li>
+                </ul>
             </li>
         </ul>
         <ul class="navbar-nav sidenav-toggler">
@@ -60,15 +76,6 @@
     </div>
 </nav>
 <div class="content-wrapper">
-    <div class="container-fluid">
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">My Dashboard</li>
-        </ol>
-    </div>
     {% for msg in app.session.flashBag.get('success') %}
         <div class="alert alert-success">
             {{ msg }}
