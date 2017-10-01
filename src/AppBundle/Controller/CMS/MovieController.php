@@ -57,23 +57,29 @@ class MovieController extends Controller
     }
     /**
      * @Route("/cms/movie/edit/{id}", name="cms_edit_movie")
-     * @Method("GET")
      */
-    public function editMovieAction($id, Request $request)
+    public function editMovieAction(Request $request, Movie $movie)
     {
-        $movie = $this->getDoctrine()
-            ->getRepository('AppBundle\Entity\Movie')
-            ->find($id);
+        $form = $this->createForm(MovieFormType::class, $movie);
 
-        if (!$movie) {
-            throw $this->createNotFoundException(
-                'No movie found for id '.$id
-            );
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $movie = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($movie);
+            $em->flush();
+
+            $this->addFlash('success', 'Movie updated');
+
+            return $this->redirectToRoute('cms_list_movie');
         }
 
-        return $this->render('cms/movie/edit.html.twig', array(
-            'movie' => $movie
-        ));
+        return $this->render('cms/movie/edit.html.twig',[
+            'movieForm' => $form->createView()
+        ]);
     }
     /**
      * @Route("/cms/movie/delete/{id}", name="cms_delete_movie")

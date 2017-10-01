@@ -23,10 +23,10 @@
                     <td>{{ movie.year }}</td>
                     <td>{{ movie.description }}</td>
                     <td>
-                        <a href="/cms/movie/edit/{{ movie.id}}" class="btn btn-primary">Edit</a>
+                        <a href="{{ path('cms_edit_movie', {'id': movie.id}) }}" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
-                        <a href="/cms/movie/delete/{{ movie.id}}" class="btn btn-danger">Delete</a>
+                        <a href="{{ path('cms_delete_movie', {'id': movie.id}) }}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

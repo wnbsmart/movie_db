@@ -23,10 +23,10 @@
                     <td>{{ person.dateOfBirth|date('d. m. Y.') }}</td>
                     <td>{{ person.id }}</td> <!-- FIX -->
                     <td>
-                        <a href="/cms/person/edit/{{ person.id}}" class="btn btn-primary">Edit</a>
+                        <a href="{{ path('cms_edit_person', {'id': person.id}) }}" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
-                        <a href="/cms/person/delete/{{ person.id}}" class="btn btn-danger">Delete</a>
+                        <a href="{{ path('cms_delete_person', {'id': person.id}) }}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

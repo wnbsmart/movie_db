@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller\CMS;
 
+use AppBundle\Entity\Person;
 use AppBundle\Form\PersonFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,18 +57,28 @@ class PersonController extends Controller
     /**
      * @Route("/cms/person/edit/{id}", name="cms_edit_person")
      */
-    public function editPersonAction($id, Request $request)
+    public function editPersonAction(Request $request, Person $person)
     {
-        $person = $this->getDoctrine()
-            ->getRepository('AppBundle\Entity\Movie')
-            ->find($id);
+        $form = $this->createForm(PersonFormType::class, $person);
 
-        if (!$person) {
-            throw $this->createNotFoundException(
-                'No person found for id '.$id
-            );
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $person = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($person);
+            $em->flush();
+
+            $this->addFlash('success', 'Person updated');
+
+            return $this->redirectToRoute('cms_list_person');
         }
-        return $this->render('cms/person/edit.html.twig');
+
+        return $this->render('cms/person/edit.html.twig',[
+            'personForm' => $form->createView()
+        ]);
     }
     /**
      * @Route("/cms/person/delete/{id}", name="cms_delete_person")
