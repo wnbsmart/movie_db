@@ -1,0 +1,17 @@
+{% extends 'cms_base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Add movie</h1>
+                {{ form_start(movieRoleForm) }}
+                    {{ form_widget(movieRoleForm) }}
+                    <button type="submit" class="btn btn-primary" formnovalidate>Add</button>
+                {{ form_end(movieRoleForm) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

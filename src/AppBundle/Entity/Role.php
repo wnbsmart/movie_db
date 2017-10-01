@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,6 +35,12 @@ class Role
      * @ORM\ManyToOne(targetEntity="Movie")
      */
     private $movie;
+
+    public function __construct()
+    {
+        $this->person = new ArrayCollection();
+        $this->movie = new ArrayCollection();
+    }
 
     /**
      * @return mixed

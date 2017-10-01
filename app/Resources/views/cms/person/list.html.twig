@@ -7,10 +7,10 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Image</th>
+                <!--<th>Image</th> ADD -->
                 <th>Name</th>
                 <th>Date of birth</th>
-                <th>Number of (acting, directing etc.)</th> <!-- Add !! -->
+                <!--   <th>Number of (acting, directing etc.)</th> Add !! -->
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -19,10 +19,10 @@
             <tbody>
             {% for person in persons %}
                 <tr>
-                    <td>{{ person.imagePath }}</td>
+                    <!--<td>{//{ person.imagePath }}</td> -->
                     <td>{{ person.name }}</td>
                     <td>{{ person.dateOfBirth|date('d. m. Y.') }}</td>
-                    <td>{{ person.id }}</td> <!-- FIX -->
+                    <!-- <td>{//{ count... }}</td>  FIX -->
                     <td>
                         <a href="{{ path('cms_show_person', {'id': person.id}) }}" class="btn btn-success">View</a>
                     </td>

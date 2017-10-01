@@ -10,13 +10,42 @@ namespace AppBundle\Controller\CMS;
 
 use AppBundle\Entity\Movie;
 use AppBundle\Form\MovieFormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use AppBundle\Form\MovieRoleModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class MovieController extends Controller
 {
+    /**
+     * @Route("/cms/movie/test", name="test")
+     */
+    public function testAction(Request $request)
+    {
+        $form = $this->createForm(MovieRoleModel::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $movie = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($movie);
+            $em->flush();
+
+            $this->addFlash('success', 'Movie created');
+
+            return $this->redirectToRoute('cms_list_movie');
+        }
+
+        return $this->render('cms/movie/test.html.twig',[
+            'movieRoleForm' => $form->createView()
+        ]);
+    }
+
+
+
     /**
      * @Route("/cms/movie/list", name="cms_list_movie")
      */
@@ -120,4 +149,8 @@ class MovieController extends Controller
             'movie' => $movie
         ]);
     }
+
+
+
+
 }
