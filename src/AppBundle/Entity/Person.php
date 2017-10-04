@@ -24,6 +24,7 @@ class Person
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @ORM\JoinColumn(name="person_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $name;
     /**

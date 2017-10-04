@@ -7,14 +7,38 @@
 
         <p>Description: {{ movie.description }}</p>
         <p>Director(s):
-            <ul>
-                {% for person in persons %}
-                <li>{{ person.name }}</li>
+        <ul>
+            {% if directors %}
+                {% for director in directors %}
+                    <li>{{ director.getperson.getname }}</li>
                 {% endfor %}
-            </ul>
+            {% else %}
+                Unknown
+            {% endif %}
+        </ul>
         </p>
-        <p>Writer(s): </p>
-        <p>Actors: </p>
+        <p>Writer(s):
+        <ul>
+            {% if writers %}
+                {% for writer in writers %}
+                    <li>{{ writer.getperson.getname }}</li>
+                {% endfor %}
+            {% else %}
+                Unknown
+            {% endif %}
+        </ul>
+        </p>
+        <p>Actors:
+        <ul>
+            {% if actors %}
+                {% for actor in actors %}
+                    <li>{{ actor.getperson.getname }}</li>
+                {% endfor %}
+            {% else %}
+                Unknown
+            {% endif %}
+        </ul>
+        </p>
     </div>
 
 

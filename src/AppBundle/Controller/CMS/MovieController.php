@@ -160,14 +160,36 @@ class MovieController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $movie = $em->getRepository('AppBundle:Movie')->find($id);
-        $roles = $em
-            ->getRepository('AppBundle:Role')
-            ->findBy(array('movie' => $id));
-        $persons = $em
-            ->getRepository('AppBundle:Role')
-            ->findBy(array('movie' => $id));
 
+        $repository = $this->getDoctrine()
+            ->getRepository(Role::class);
 
+        $query = $repository->createQueryBuilder('r')
+            ->andWhere('r.movie = :id AND r.name = :actor')
+            ->setParameters(['id' => $id, 'actor' => 'actor'])
+            ->getQuery();
+
+        if(!empty($query->getResult()))
+            $actors = $query->getResult();
+        else $actors = null;
+
+        $query = $repository->createQueryBuilder('r')
+            ->andWhere('r.movie = :id AND r.name = :writer')
+            ->setParameters(['id' => $id, 'writer' => 'writer'])
+            ->getQuery();
+
+        if(!empty($query->getResult()))
+            $writers = $query->getResult();
+        else $writers = null;
+
+        $query = $repository->createQueryBuilder('r')
+            ->andWhere('r.movie = :id AND r.name = :director')
+            ->setParameters(['id' => $id, 'director' => 'director'])
+            ->getQuery();
+
+        if(!empty($query->getResult()))
+            $directors = $query->getResult();
+        else $directors = null;
 
 
 
@@ -179,7 +201,9 @@ class MovieController extends Controller
 
         return $this->render('cms/movie/show.html.twig', [
             'movie' => $movie,
-            'persons' => $persons
+            'actors' => $actors,
+            'directors' => $directors,
+            'writers' => $writers
         ]);
     }
 
