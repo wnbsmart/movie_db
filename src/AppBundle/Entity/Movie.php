@@ -31,6 +31,7 @@ class Movie
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
+     * @Assert\Range(min="0")
      */
     private $year;
     /**
@@ -41,6 +42,12 @@ class Movie
      * @ORM\Column(type="string", nullable=true)
      */
     private $image_path;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Person", inversedBy="movie")
+     * protected $person;
+     */
+
 
     /**
      * @return mixed

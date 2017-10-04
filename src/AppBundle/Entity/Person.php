@@ -36,6 +36,11 @@ class Person
     private $image_path;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="person")
+     */
+    protected $movie;
+
+    /**
      * @return mixed
      */
     public function getId()

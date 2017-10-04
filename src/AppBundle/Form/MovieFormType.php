@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,11 +14,10 @@ class MovieFormType extends AbstractType
         $builder
             ->add('name')
             ->add('year')
-            ->add('description', null, array(
+            ->add('description', TextareaType::class, array(
                 'required'   => false,
                 'empty_data' => '',
-            ))
-            ->add('imagePath');
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

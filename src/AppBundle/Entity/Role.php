@@ -36,11 +36,7 @@ class Role
      */
     private $movie;
 
-    public function __construct()
-    {
-        $this->person = new ArrayCollection();
-        $this->movie = new ArrayCollection();
-    }
+
 
     /**
      * @return mixed

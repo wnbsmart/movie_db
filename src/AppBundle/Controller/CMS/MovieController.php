@@ -9,8 +9,9 @@
 namespace AppBundle\Controller\CMS;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Role;
 use AppBundle\Form\MovieFormType;
-use AppBundle\Form\MovieRoleModel;
+use AppBundle\Form\MoviePersonForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,29 +19,21 @@ use Symfony\Component\HttpFoundation\Request;
 class MovieController extends Controller
 {
     /**
-     * @Route("/cms/movie/test", name="test")
+     * @Route("/cms/movie/{id}/addcrew", name="cms_add_crew_movie")
      */
-    public function testAction(Request $request)
+    public function addCrewAction(Request $request)
     {
-        $form = $this->createForm(MovieRoleModel::class);
+        $form = $this->createForm(MoviePersonForm::class);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $movie = $form->getData();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($movie);
-            $em->flush();
-
-            $this->addFlash('success', 'Movie created');
-
-            return $this->redirectToRoute('cms_list_movie');
         }
 
-        return $this->render('cms/movie/test.html.twig',[
-            'movieRoleForm' => $form->createView()
+        return $this->render('cms/movie/crew.html.twig',[
+            'MoviePersonForm' => $form->createView()
         ]);
     }
 
@@ -63,25 +56,54 @@ class MovieController extends Controller
      */
     public function addMovieAction(Request $request)
     {
-        $form = $this->createForm(MovieFormType::class);
+        $form = $this->createForm(MoviePersonForm::class);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $movie = $form->getData();
+            //grab data for checking existing movies
+            $movie_name = $form->get('movie_name')->getData();
+            $movie_year = $form->get('movie_year')->getData();
+            $result = $this->getDoctrine()
+                ->getRepository('AppBundle:Movie')
+                ->findOneBy(array('name' => $movie_name, 'year' => $movie_year));
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($movie);
-            $em->flush();
+            if($result == null) //if there is no movie with same name and year in DB
+            {
+                //create new Movie obj., set its value & insert into DB
+                $movie = new Movie();
+                $movie->setName($form->get('movie_name')->getData());
+                $movie->setYear($form->get('movie_year')->getData());
+                $movie->setDescription($form->get('movie_description')->getData());
 
-            $this->addFlash('success', 'Movie created');
+                //grab last inserted movie (for movie_id in Role table)
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($movie);
+                $em->flush();
 
-            return $this->redirectToRoute('cms_list_movie');
+                //create new Role obj., set its value & insert into DB
+                $role = new Role();
+                $role->setName($form->get('role_name')->getData());
+                $role->setPerson($form->get('person_name')->getData());
+                $role->setMovie($movie); //inserting primary key (Movie) into foreign key (Role)
+
+                $em->persist($role);
+                $em->flush();
+
+                $this->addFlash('success', 'Movie created');
+
+                return $this->redirectToRoute('cms_list_movie');
+            }
+            else
+            {
+                $this->addFlash('warning', 'Movie with the same name and year already exists');
+            }
+
         }
 
         return $this->render('cms/movie/create.html.twig',[
-            'movieForm' => $form->createView()
+            'MoviePersonForm' => $form->createView()
         ]);
     }
     /**
@@ -138,6 +160,16 @@ class MovieController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $movie = $em->getRepository('AppBundle:Movie')->find($id);
+        $roles = $em
+            ->getRepository('AppBundle:Role')
+            ->findBy(array('movie' => $id));
+        $persons = $em
+            ->getRepository('AppBundle:Role')
+            ->findBy(array('movie' => $id));
+
+
+
+
 
         if (!$movie) {
             throw $this->createNotFoundException(
@@ -146,7 +178,8 @@ class MovieController extends Controller
         }
 
         return $this->render('cms/movie/show.html.twig', [
-            'movie' => $movie
+            'movie' => $movie,
+            'persons' => $persons
         ]);
     }
 
