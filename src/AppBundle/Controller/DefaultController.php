@@ -13,6 +13,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/cms", name="cms")
+     */
+    public function cmsAction()
+    {
+        return $this->render('cms/index.html.twig');
+    }
+
+    /**
      * @Route("/{page}",
      *         name="home",
      *         requirements={"page" = "\d+"},
@@ -21,14 +29,15 @@ class DefaultController extends Controller
 
     public function pagerAction($page)
     {
+        //grab all movies
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Movie');
-        $queryBuilder = $repository->createQueryBuilder('m')
+        $queryBuilder = $em
+            ->getRepository('AppBundle:Movie')->createQueryBuilder('m')
             ->getQuery();
 
         $adapter = new DoctrineORMAdapter($queryBuilder);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(2);
+        $pager->setMaxPerPage(2); //amount of movies per page
 
         try {
             $pager->setCurrentPage($page);
@@ -36,7 +45,14 @@ class DefaultController extends Controller
             throw new NotFoundHttpException();
         }
 
-        return $this->render('/default/index.html.twig',
-            ['my_pager' => $pager]);
+        //grab all roles
+        $roles = $this->getDoctrine()
+            ->getRepository('AppBundle:Role')
+            ->findAll();
+
+        return $this->render('/default/index.html.twig',[
+            'my_pager' => $pager,
+            'roles' => $roles,
+        ]);
     }
 }
