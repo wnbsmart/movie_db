@@ -153,7 +153,7 @@ class PersonController extends Controller
             'person' => $person,
             'a_movies' => $a_movies,
             'w_movies' => $w_movies,
-            'd_movies' => $d_movies,
+            'd_movies' => $d_movies
         ]);
     }
 }

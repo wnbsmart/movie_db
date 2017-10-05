@@ -16,9 +16,60 @@ use AppBundle\Form\RoleForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MovieController extends Controller
 {
+    /**
+     * @Route("/cms/movie/create", name="cms_create_movie")
+     */
+    public function newMovieAction(Request $request)
+    {
+        $movie = new Movie();
+        $form = $this->createForm(MovieFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $movie->setName($form->get('name')->getData());
+            $movie->setYear($form->get('year')->getData());
+            $movie->setDescription($form->get('description')->getData());
+
+            $file = $form->get('imagePath')->getData();
+            $img_name = time() . $file->getClientOriginalName();
+            $path_parts = pathinfo($img_name); //variable for checking file's extension (in elseif ->)
+
+            if(!is_object($form->get('imagePath'))) //if file is NOT being uploaded
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($movie);
+                $em->flush();
+
+                $this->addFlash('success', 'Movie created');
+                return $this->redirectToRoute('cms_list_movie');
+            }
+            elseif($path_parts['extension'] == "jpg" || $path_parts['extension'] == "jpeg" || $path_parts['extension'] == "png")
+            {   //if file has extension .jpg, .jpeg or .png
+                $movie->setImagePath($img_name);
+
+                $file->move($this->getParameter('upload_directory'), $img_name);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($movie);
+                $em->flush();
+
+                $this->addFlash('success', 'Movie created');
+                return $this->redirectToRoute('cms_list_movie');
+            }
+            else{
+                $this->addFlash('warning', 'Chosen file must be an image (.jpg, .jpeg, .png)');
+            }
+        }
+        return $this->render('cms/movie/create.html.twig',[
+            'MovieFormType' => $form->createView(),
+        ]);
+    }
+
     /**
      * @Route("/cms/movie/{id}/addcrew", name="cms_add_crew_movie")
      */
@@ -54,8 +105,6 @@ class MovieController extends Controller
         ]);
     }
 
-
-
     /**
      * @Route("/cms/movie/list", name="cms_list_movie")
      */
@@ -68,61 +117,7 @@ class MovieController extends Controller
             'movies' => $movies
         ));
     }
-    /**
-     * @Route("/cms/movie/create", name="cms_create_movie")
-     */
-    public function addMovieAction(Request $request)
-    {
-        $form = $this->createForm(MoviePersonForm::class);
 
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            //grab data for checking existing movies
-            $movie_name = $form->get('movie_name')->getData();
-            $movie_year = $form->get('movie_year')->getData();
-            $result = $this->getDoctrine()
-                ->getRepository('AppBundle:Movie')
-                ->findOneBy(array('name' => $movie_name, 'year' => $movie_year));
-
-            if($result == null) //if there is no movie with same name and year in DB
-            {
-                //create new Movie obj., set its value & insert into DB
-                $movie = new Movie();
-                $movie->setName($form->get('movie_name')->getData());
-                $movie->setYear($form->get('movie_year')->getData());
-                $movie->setDescription($form->get('movie_description')->getData());
-
-                //grab last inserted movie (for movie_id in Role table)
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($movie);
-                $em->flush();
-
-                //create new Role obj., set its value & insert into DB
-                $role = new Role();
-                $role->setName($form->get('role_name')->getData());
-                $role->setPerson($form->get('person_name')->getData());
-                $role->setMovie($movie); //inserting primary key (Movie) into foreign key (Role)
-
-                $em->persist($role);
-                $em->flush();
-
-                $this->addFlash('success', 'Movie created');
-
-                return $this->redirectToRoute('cms_list_movie');
-            }
-            else
-            {
-                $this->addFlash('warning', 'Movie with the same name and year already exists');
-            }
-
-        }
-
-        return $this->render('cms/movie/create.html.twig',[
-            'MoviePersonForm' => $form->createView()
-        ]);
-    }
     /**
      * @Route("/cms/movie/edit/{id}", name="cms_edit_movie")
      */

@@ -3,41 +3,52 @@
 {% block body %}
 
     <div class="container">
-        <h2>{{ movie.name }} ({{ movie.year }})</h2>
+        <div class="row">
+            <div class="col-md-3">
+                {% if movie.imagePath is not null %}
+                    <img src="/uploads/{{ movie.imagePath }}" alt="" class="img-fluid">
+                {% else %}
+                    <img src="{{ asset('img/no_image.jpg') }}" alt="" class="img-fluid">
+                {% endif %}
+            </div>
+            <div class="col-md-9">
+                <h2>{{ movie.name }} ({{ movie.year }})</h2>
+                <p>Description: {{ movie.description }}</p>
+                <p>Director(s):
+                <ul>
+                    {% if directors %}
+                        {% for director in directors %}
+                            <li>{{ director.getperson.getname }}</li>
+                        {% endfor %}
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </ul>
+                </p>
+                <p>Writer(s):
+                <ul>
+                    {% if writers %}
+                        {% for writer in writers %}
+                            <li>{{ writer.getperson.getname }}</li>
+                        {% endfor %}
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </ul>
+                </p>
+                <p>Actors:
+                <ul>
+                    {% if actors %}
+                        {% for actor in actors %}
+                            <li>{{ actor.getperson.getname }}</li>
+                        {% endfor %}
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
 
-        <p>Description: {{ movie.description }}</p>
-        <p>Director(s):
-        <ul>
-            {% if directors %}
-                {% for director in directors %}
-                    <li>{{ director.getperson.getname }}</li>
-                {% endfor %}
-            {% else %}
-                Unknown
-            {% endif %}
-        </ul>
-        </p>
-        <p>Writer(s):
-        <ul>
-            {% if writers %}
-                {% for writer in writers %}
-                    <li>{{ writer.getperson.getname }}</li>
-                {% endfor %}
-            {% else %}
-                Unknown
-            {% endif %}
-        </ul>
-        </p>
-        <p>Actors:
-        <ul>
-            {% if actors %}
-                {% for actor in actors %}
-                    <li>{{ actor.getperson.getname }}</li>
-                {% endfor %}
-            {% else %}
-                Unknown
-            {% endif %}
-        </ul>
         </p>
     </div>
 
