@@ -6,8 +6,16 @@
         <h1>Welcome to Movie database</h1>
     </div>
 
-    <div class="row">
-        
+    <div class="row intro" style="margin-top: 20px;">
+        {% for movie in movies %}
+            {% if movie.imagePath is not null %}
+                <div class="col-md-3">
+                    <a href="{{ path('cms_show_movie', {'id': movie.id}) }}">
+                        <img src="/uploads/{{ movie.imagePath }}" alt="" class="img-fluid introimg">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
 {% endblock %}

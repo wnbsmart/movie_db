@@ -5,39 +5,48 @@
     <div class="container">
         <div class="pagerfanta">
             {% for movie in my_pager.currentPageResults %}
-                <div class="col-lg-12" style="border: 1px dashed #5eb5e0;margin-bottom: 10px;">
-                    <p><strong>Name:</strong> {{ movie.name }}</p>
-                    <p><strong>Description:</strong> {{ movie.description }}</p>
-                    <strong>Cast:</strong>
-                    <ul>
-                        <li><em>Actors</em>:
-                            <ul>
-                                {% for role in roles %}
-                                    {% if role.movie.id == loop.parent.movie.id and role.getname == "actor" %}
-                                        <li>{{ role.person.getname }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        <li><em>Writer(s)</em>:
-                            <ul>
-                                {% for role in roles %}
-                                    {% if role.movie.id == loop.parent.movie.id and role.getname == "writer" %}
-                                        <li>{{ role.person.getname }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        <li><em>Director(s</em>):
-                            <ul>
-                                {% for role in roles %}
-                                    {% if role.movie.id == loop.parent.movie.id and role.getname == "director" %}
-                                        <li>{{ role.person.getname }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
+                <div class="row" style="border: 1px dashed #5eb5e0;margin-bottom: 10px;">
+                    <div class="col-md-3">
+                        {% if movie.imagePath is not null %}
+                            <img src="/uploads/{{ movie.imagePath }}" alt="" class="img-fluid">
+                        {% else %}
+                            <img src="{{ asset('img/no_image.jpg') }}" alt="" class="img-fluid">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <p><strong>Name:</strong> {{ movie.name }}</p>
+                        <p><strong>Description:</strong> {{ movie.description }}</p>
+                        <strong>Cast:</strong>
+                        <ul>
+                            <li><em>Actors</em>:
+                                <ul>
+                                    {% for role in roles %}
+                                        {% if role.movie.id == loop.parent.movie.id and role.getname == "actor" %}
+                                            <li>{{ role.person.getname }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li><em>Writer(s)</em>:
+                                <ul>
+                                    {% for role in roles %}
+                                        {% if role.movie.id == loop.parent.movie.id and role.getname == "writer" %}
+                                            <li>{{ role.person.getname }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li><em>Director(s</em>):
+                                <ul>
+                                    {% for role in roles %}
+                                        {% if role.movie.id == loop.parent.movie.id and role.getname == "director" %}
+                                            <li>{{ role.person.getname }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             {% endfor %}
 

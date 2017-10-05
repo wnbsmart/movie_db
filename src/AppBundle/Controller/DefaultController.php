@@ -16,7 +16,11 @@ class DefaultController extends Controller
      */
     public function cmsAction()
     {
-        return $this->render('cms/index.html.twig');
+        $movies = $this->getDoctrine()
+            ->getRepository('AppBundle:Movie')
+            ->findAll();
+
+        return $this->render('cms/index.html.twig',['movies' => $movies]);
     }
 
     /**
@@ -36,7 +40,7 @@ class DefaultController extends Controller
 
         $adapter = new DoctrineORMAdapter($queryBuilder);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(2); //amount of movies per page
+        $pager->setMaxPerPage(4); //amount of movies per page
 
         try {
             $pager->setCurrentPage($page);
