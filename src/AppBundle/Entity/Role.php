@@ -29,7 +29,6 @@ class Role
     private $name;
     /**
      * @ORM\ManyToOne(targetEntity="Person")
-     * @ORM\JoinColumn(name="id", referencedColumnName="person_id", onDelete="CASCADE")
      */
     private $person;
     /**

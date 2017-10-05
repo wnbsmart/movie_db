@@ -1,0 +1,19 @@
+movie{
+    border: 1px dashed #5eb5e0 !important;
+}
+
+.pager {
+    text-align: center;
+}
+.pager ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    /* For IE, the outcast */
+    zoom:1;
+    *display: inline;
+}
+.pager li {
+    float: left;
+    padding: 2px 5px;
+}

@@ -9,6 +9,7 @@
 namespace AppBundle\Controller\CMS;
 
 use AppBundle\Entity\Person;
+use AppBundle\Entity\Role;
 use AppBundle\Form\PersonFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -115,8 +116,44 @@ class PersonController extends Controller
             );
         }
 
+        $repository = $this->getDoctrine()
+            ->getRepository(Role::class);
+
+        //find all movies where person acted (a_movies)
+        $query = $repository->createQueryBuilder('r')
+            ->andWhere('r.person = :id AND r.name = :actor')
+            ->setParameters(['id' => $id, 'actor' => 'actor'])
+            ->getQuery();
+
+        if(!empty($query->getResult()))
+            $a_movies = $query->getResult();
+        else $a_movies = null;
+
+        //find all movies where person was a writer (w_movies)
+        $query = $repository->createQueryBuilder('r')
+            ->andWhere('r.person = :id AND r.name = :writer')
+            ->setParameters(['id' => $id, 'writer' => 'writer'])
+            ->getQuery();
+
+        if(!empty($query->getResult()))
+            $w_movies = $query->getResult();
+        else $w_movies = null;
+
+        //find all movies where person directed them (d_movies)
+        $query = $repository->createQueryBuilder('r')
+            ->andWhere('r.person = :id AND r.name = :director')
+            ->setParameters(['id' => $id, 'director' => 'director'])
+            ->getQuery();
+
+        if(!empty($query->getResult()))
+            $d_movies = $query->getResult();
+        else $d_movies = null;
+
         return $this->render('cms/person/show.html.twig', [
-            'person' => $person
+            'person' => $person,
+            'a_movies' => $a_movies,
+            'w_movies' => $w_movies,
+            'd_movies' => $d_movies,
         ]);
     }
 }

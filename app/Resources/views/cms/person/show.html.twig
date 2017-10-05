@@ -3,7 +3,38 @@
 {% block body %}
 
     <div class="container">
-        <h2>{{ person.name }}</h2>
+        <h2>{{ person.name }}</h2><br>
+        <h4>Appearances:</h4>
+
+        {% if a_movies %}
+            <strong>Actor:</strong>
+            <ul>
+                {% for a_movie in a_movies %}
+                    <li>{{ a_movie.getmovie.getname }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if w_movies %}
+            <strong>Director:</strong>
+            <ul>
+                {% for w_movie in w_movies %}
+                    <li>{{ w_movie.getmovie.getname }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if d_movies %}
+            <strong>Writer:</strong>
+            <ul>
+                {% for d_movie in d_movies %}
+                    <li>{{ d_movie.getmovie.getname }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- if person's career is empty -->
+        {% if not a_movies and not w_movies and not d_movies %}
+            Apparently, this persons prefers to keep an air of mystery about them. <!-- thanks to SO -->
+        {% endif %}
     </div>
 
 

@@ -2,62 +2,41 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Person;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
     Pagerfanta\Pagerfanta,
     Pagerfanta\Adapter\DoctrineORMAdapter,
     Pagerfanta\Exception\NotValidCurrentPageException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
-    /*/**
-     * @Route("/example/{page}",
-     *         name="example",
-     *         requirements={"page" = "\d+"},
-     *         defaults={"page" = "1"}
-     * )
-     *
-     */
     /**
-     * @Route("/", name="home")
+     * @Route("/{page}",
+     *         name="home",
+     *         requirements={"page" = "\d+"},
+     *         defaults={"page" = "1"})
      */
-    public function indexAction()
-    {
-        return $this->render('default/index.html.twig');
-        /*
-        $entityManager = $this->getDoctrine()->getManager();
-        $repository  = $entityManager->getRepository('AppBundle:Person');
 
-        $query = $repository->createQueryBuilder('p')
+    public function pagerAction($page)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Movie');
+        $queryBuilder = $repository->createQueryBuilder('m')
             ->getQuery();
 
-        $queryBuilder = $entityManager->createQueryBuilder()
-            ->select('name')
-            ->from('AppBundle:Person', 'u');
         $adapter = new DoctrineORMAdapter($queryBuilder);
-
-        $repo = $this->getDoctrine()->getRepository('AppBundle:Person');
-
-        // returns \Doctrine\ORM\Query object
-        $query = $this->getDoctrine()
-            ->getRepository('AppBundle:Person');
-
-        $pagerfanta = new Pagerfanta(new DoctrineORMAdapter($query));
-        $pagerfanta->setMaxPerPage(5);
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(2);
 
         try {
-            $pagerfanta->setCurrentPage($page);
+            $pager->setCurrentPage($page);
         } catch(NotValidCurrentPageException $e) {
             throw new NotFoundHttpException();
         }
 
-        return $this->render('default/index.html.twig', [
-            'examples' => $pagerfanta,
-        ]);
-        */
+        return $this->render('/default/index.html.twig',
+            ['my_pager' => $pager]);
     }
 }

@@ -1,9 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Home</h2>
+    <br><br><br><br>
+    <div class="container">
+        <div class="pagerfanta">
+            {% for item in my_pager.currentPageResults %}
+                <ul>
+                    <li>{{ dump(item) }}</li>
+                </ul>
+            {% endfor %}
 
-    <a href="{{ path('cms') }}">CMS</a>
+            <div class="pager text-center">
+                {{ pagerfanta(my_pager, 'twitter_bootstrap3') }}
+            </div>
 
+        </div>
+    </div>
 {% endblock %}
 

@@ -5,9 +5,30 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <a href="{{ path('home')}}" class="navbar-brand">Movie DB</a>
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="{{ path('cms') }}" class="navbar-brand">CMS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% block body %}{% endblock %}
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    {% block javascripts %}{% endblock %}
     </body>
 </html>

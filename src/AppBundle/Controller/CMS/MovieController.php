@@ -161,6 +161,12 @@ class MovieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $movie = $em->getRepository('AppBundle:Movie')->find($id);
 
+        if (!$movie) {
+            throw $this->createNotFoundException(
+                'No movie found for id '.$id
+            );
+        }
+
         $repository = $this->getDoctrine()
             ->getRepository(Role::class);
 
@@ -190,14 +196,6 @@ class MovieController extends Controller
         if(!empty($query->getResult()))
             $directors = $query->getResult();
         else $directors = null;
-
-
-
-        if (!$movie) {
-            throw $this->createNotFoundException(
-                'No movie found for id '.$id
-            );
-        }
 
         return $this->render('cms/movie/show.html.twig', [
             'movie' => $movie,
