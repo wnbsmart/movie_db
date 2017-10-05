@@ -20,7 +20,9 @@ class MovieFormType extends AbstractType
                 'empty_data' => '',
             ))
             ->add('imagePath', FileType::class, array(
-                'label' => ' '));
+                'label' => ' ',
+                'data_class' => null,
+                'required' => false));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -11,19 +11,17 @@ namespace AppBundle\Controller\CMS;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\Role;
 use AppBundle\Form\MovieFormType;
-use AppBundle\Form\MoviePersonForm;
 use AppBundle\Form\RoleForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MovieController extends Controller
 {
     /**
      * @Route("/cms/movie/create", name="cms_create_movie")
      */
-    public function newMovieAction(Request $request)
+    public function addMovieAction(Request $request)
     {
         $movie = new Movie();
         $form = $this->createForm(MovieFormType::class);
@@ -39,7 +37,7 @@ class MovieController extends Controller
             $img_name = time() . $file->getClientOriginalName();
             $path_parts = pathinfo($img_name); //variable for checking file's extension (in elseif ->)
 
-            if(!is_object($form->get('imagePath'))) //if file is NOT being uploaded
+            if(!is_object($form->get('imagePath')->getData())) //if file is NOT being uploaded
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($movie);
@@ -125,23 +123,63 @@ class MovieController extends Controller
     {
         $form = $this->createForm(MovieFormType::class, $movie);
 
+        //it's for showing existing image while editing,
+        //if person chooses wrong format of file,
+        //"Existing photo: " text would show up
+        $if_image_exists = $movie->getImagePath();
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $movie = $form->getData();
-
             $em = $this->getDoctrine()->getManager();
-            $em->persist($movie);
-            $em->flush();
+            $m_id = $movie->getId(); //for redirecting...
 
-            $this->addFlash('success', 'Movie updated');
+            if(!is_object($form->get('imagePath')->getData()) && $movie->getImagePath() == null) //file isn't set & movie HASN'T image already
+            {
+                $em->persist($movie);
+                $em->flush();
+                $this->addFlash('success', 'Movie updated');
+                return $this->redirectToRoute('cms_show_movie', ['id'=>$m_id]);
+            }
+            elseif(!is_object($form->get('imagePath')->getData()) && $movie->getImagePath() != null) //file isn't set & movie HAS image already
+            {
+                $movie->setName($form->get('name')->getData());
+                $movie->setYear($form->get('year')->getData());
+                $movie->setDescription($form->get('description')->getData());
+                $em->persist($movie);
+                $em->flush();
+                $this->addFlash('success', 'Movie updated');
+                return $this->redirectToRoute('cms_show_movie', ['id'=>$m_id]);
+            }
+            elseif(is_object($form->get('imagePath'))) //file IS set
+            {
+                $file = $form->get('imagePath')->getData();
+                $img_name = time() . $file->getClientOriginalName();
 
-            return $this->redirectToRoute('cms_list_movie');
+                $path_parts = pathinfo($img_name);
+                if($path_parts['extension'] == "jpg" || $path_parts['extension'] == "jpeg" || $path_parts['extension'] == "png")
+                {
+                    $movie->setImagePath($img_name);
+
+                    $file->move($this->getParameter('upload_directory'), $img_name);
+
+                    $em->persist($movie);
+                    $em->flush();
+
+                    $this->addFlash('success', 'Movie updated');
+                    return $this->redirectToRoute('cms_show_movie', ['id'=>$m_id]);
+                }
+                else
+                {
+                    $this->addFlash('warning', 'Chosen file must be an image (.jpg, .jpeg, .png)');
+                }
+            }
         }
 
         return $this->render('cms/movie/edit.html.twig',[
-            'movieForm' => $form->createView()
+            'movieForm' => $form->createView(),
+            'movie' => $if_image_exists,
         ]);
     }
     /**

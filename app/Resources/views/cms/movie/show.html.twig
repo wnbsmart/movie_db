@@ -12,7 +12,11 @@
                 {% endif %}
             </div>
             <div class="col-md-9">
-                <h2>{{ movie.name }} ({{ movie.year }})</h2>
+
+                <h2>{{ movie.name }} ({{ movie.year }})
+                    <a class="btn btn-outline-info" href="{{ path('cms_edit_movie', {'id':movie.id})}}">Edit</a>
+                    <a class="btn btn-outline-info" href="{{ path('cms_add_crew_movie', {'id':movie.id})}}">Add crew</a>
+                </h2>
                 <p>Description: {{ movie.description }}</p>
                 <p>Director(s):
                 <ul>
