@@ -12,6 +12,7 @@ use AppBundle\Entity\Movie;
 use AppBundle\Entity\Role;
 use AppBundle\Form\MovieFormType;
 use AppBundle\Form\MoviePersonForm;
+use AppBundle\Form\RoleForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,19 +22,35 @@ class MovieController extends Controller
     /**
      * @Route("/cms/movie/{id}/addcrew", name="cms_add_crew_movie")
      */
-    public function addCrewAction(Request $request)
+    public function addCrewAction(Request $request, Movie $movie)
     {
-        $form = $this->createForm(MoviePersonForm::class);
+        $form = $this->createForm(RoleForm::class);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
+            //create new Role obj., set its value & insert into DB
+            $role = new Role();
+            $role->setName($form->get('name')->getData());
+            $role->setPerson($form->get('person')->getData());
+            $role->setMovie($movie); //inserting primary key (Movie) into foreign key (Role)
 
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($role);
+            $em->flush();
+
+            $this->addFlash('success', 'Person added');
         }
 
+        $roles = $this->getDoctrine()
+            ->getRepository('AppBundle:Role')
+            ->findByMovie($movie);
+
         return $this->render('cms/movie/crew.html.twig',[
-            'MoviePersonForm' => $form->createView()
+            'RoleForm' => $form->createView(),
+            'movie' => $movie,
+            'roles' => $roles,
         ]);
     }
 

@@ -3,8 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Pagerfanta\Pagerfanta,
     Pagerfanta\Adapter\DoctrineORMAdapter,
     Pagerfanta\Exception\NotValidCurrentPageException;

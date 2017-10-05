@@ -2,16 +2,43 @@
 
 {% block body %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Add movie</h1>
-                {{  form_start(MoviePersonForm) }}
-                    {{ form_widget(MoviePersonForm) }}
-                    <button type="submit" class="btn btn-primary" formnovalidate>Add</button>
-                {{ form_end(MoviePersonForm) }}
-            </div>
-        </div>
+    <div class="col-lg-12">
+        <h1>{{ movie.name }} - add cast</h1>
+        <strong>Cast:</strong>
+        <ul>
+            <li><em>Actors</em>:
+                <ul>
+                    {% for role in roles %}
+                        {% if role.movie.id == loop.parent.movie.id and role.getname == "actor" %}
+                            <li>{{ role.person.getname }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><em>Writer(s)</em>:
+                <ul>
+                    {% for role in roles %}
+                        {% if role.movie.id == loop.parent.movie.id and role.getname == "writer" %}
+                            <li>{{ role.person.getname }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><em>Director(s</em>):
+                <ul>
+                    {% for role in roles %}
+                        {% if role.movie.id == loop.parent.movie.id and role.getname == "director" %}
+                            <li>{{ role.person.getname }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
     </div>
+                {{  form_start(RoleForm) }}
+                    {{ form_widget(RoleForm) }}
+                    <button type="submit" class="btn btn-primary" formnovalidate>Add</button>
+                {{ form_end(RoleForm) }}
+
 
 {% endblock %}
