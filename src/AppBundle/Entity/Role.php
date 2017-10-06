@@ -8,7 +8,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,10 +31,12 @@ class Role
     /**
      * @ORM\ManyToOne(targetEntity="Person")
      * @Assert\NotBlank()
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $person;
     /**
      * @ORM\ManyToOne(targetEntity="Movie")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $movie;
 

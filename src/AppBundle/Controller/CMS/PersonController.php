@@ -25,6 +25,7 @@ class PersonController extends Controller
         $persons = $this->getDoctrine()
             ->getRepository('AppBundle:Person')
             ->findAll();
+
         return $this->render('cms/person/list.html.twig', array(
             'persons' => $persons
         ));
@@ -119,14 +120,14 @@ class PersonController extends Controller
     /**
      * @Route("/cms/person/delete/{id}", name="cms_delete_person")
      */
-    public function deletePersonAction($id)
+    public function deletePersonAction(Person $person)
     {
         $em = $this->getDoctrine()->getManager();
-        $person = $em->getRepository('AppBundle:Person')->find($id);
+        $person = $em->getRepository('AppBundle:Person')->find($person);
 
         if (!$person) {
             throw $this->createNotFoundException(
-                'No person found for id '.$id
+                'No person found for id '.$person->getId()
             );
         }
 

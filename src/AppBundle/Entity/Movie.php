@@ -21,6 +21,7 @@ class Movie
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $id;
     /**

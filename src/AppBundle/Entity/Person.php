@@ -20,6 +20,7 @@ class Person
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $id;
     /**
@@ -35,11 +36,6 @@ class Person
      * @ORM\Column(type="string", nullable=true)
      */
     private $image_path;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="person")
-     */
-    protected $movie;
 
     /**
      * @return mixed
