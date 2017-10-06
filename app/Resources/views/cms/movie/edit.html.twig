@@ -10,10 +10,10 @@
                     {{ form_widget(movieForm) }}
                     <button type="submit" class="btn btn-lg btn-primary">Save</button>
                 {{ form_end(movieForm) }}
-                {% if movie is not null %}
+                {% if image is not null %}
                     <div style="max-width:200px;">
                         Existing photo:
-                        <img src="/uploads/{{ movie }}" alt="" class="img-fluid">
+                        <img src="/uploads/{{ image }}" alt="" class="img-fluid">
                     </div>
                 {% endif %}
             </div>

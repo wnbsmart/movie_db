@@ -8,8 +8,14 @@
                 <h1>Edit person</h1>
                 {{ form_start(personForm) }}
                     {{ form_widget(personForm) }}
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-lg btn-primary">Save</button>
                 {{ form_end(personForm) }}
+                {% if image is not null %}
+                    <div style="max-width:200px;">
+                        Existing photo:
+                        <img src="/uploads/{{ image }}" alt="" class="img-fluid">
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

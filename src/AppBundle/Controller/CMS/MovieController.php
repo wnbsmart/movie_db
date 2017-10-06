@@ -123,10 +123,7 @@ class MovieController extends Controller
     {
         $form = $this->createForm(MovieFormType::class, $movie);
 
-        //it's for showing existing image while editing,
-        //if person chooses wrong format of file,
-        //"Existing photo: " text would show up
-        $if_image_exists = $movie->getImagePath();
+        $if_image_exists = $movie->getImagePath(); //grabs image, but it's also information does movie even contain an image
 
         $form->handleRequest($request);
 
@@ -135,18 +132,16 @@ class MovieController extends Controller
             $em = $this->getDoctrine()->getManager();
             $m_id = $movie->getId(); //for redirecting...
 
-            if(!is_object($form->get('imagePath')->getData()) && $movie->getImagePath() == null) //file isn't set & movie HASN'T image already
+            if(!is_object($form->get('imagePath')->getData()) && $if_image_exists == false) //file isn't set & movie HASN'T image already
             {
                 $em->persist($movie);
                 $em->flush();
                 $this->addFlash('success', 'Movie updated');
                 return $this->redirectToRoute('cms_show_movie', ['id'=>$m_id]);
             }
-            elseif(!is_object($form->get('imagePath')->getData()) && $movie->getImagePath() != null) //file isn't set & movie HAS image already
+            elseif(!is_object($form->get('imagePath')->getData()) && $if_image_exists == true) //file isn't set & movie HAS image already
             {
-                $movie->setName($form->get('name')->getData());
-                $movie->setYear($form->get('year')->getData());
-                $movie->setDescription($form->get('description')->getData());
+                $movie->setImagePath($if_image_exists);
                 $em->persist($movie);
                 $em->flush();
                 $this->addFlash('success', 'Movie updated');
@@ -179,7 +174,7 @@ class MovieController extends Controller
 
         return $this->render('cms/movie/edit.html.twig',[
             'movieForm' => $form->createView(),
-            'movie' => $if_image_exists,
+            'image' => $if_image_exists,
         ]);
     }
     /**

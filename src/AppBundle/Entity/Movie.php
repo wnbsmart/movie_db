@@ -43,11 +43,6 @@ class Movie
      */
     private $image_path;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Person", inversedBy="movie")
-     * protected $person;
-     */
-
 
     /**
      * @return mixed

@@ -62,36 +62,71 @@ class PersonController extends Controller
     {
         $form = $this->createForm(PersonFormType::class, $person);
 
+        $if_image_exists = $person->getImagePath(); //grabs image, but it's also information does movie even contain an image
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $person = $form->getData();
-
             $em = $this->getDoctrine()->getManager();
-            $em->persist($person);
-            $em->flush();
+            $p_id = $person->getId(); //for redirecting...
 
-            $this->addFlash('success', 'Person updated');
+            if(!is_object($form->get('imagePath')->getData()) && $if_image_exists == false) //file isn't set & person HASN'T image already
+            {
+                $em->persist($person);
+                $em->flush();
+                $this->addFlash('success', 'Person updated');
+                return $this->redirectToRoute('cms_show_person', ['id'=>$p_id]);
+            }
+            elseif(!is_object($form->get('imagePath')->getData()) && $if_image_exists == true) //file isn't set & person HAS image already
+            {
+                $person->setImagePath($if_image_exists);
+                $em->persist($person);
+                $em->flush();
+                $this->addFlash('success', 'Person updated');
+                return $this->redirectToRoute('cms_show_person', ['id'=>$p_id]);
+            }
+            elseif(is_object($form->get('imagePath'))) //file IS set
+            {
+                $file = $form->get('imagePath')->getData();
+                $img_name = time() . $file->getClientOriginalName();
 
-            return $this->redirectToRoute('cms_list_person');
+                $path_parts = pathinfo($img_name);
+                if($path_parts['extension'] == "jpg" || $path_parts['extension'] == "jpeg" || $path_parts['extension'] == "png")
+                {
+                    $person->setImagePath($img_name);
+
+                    $file->move($this->getParameter('upload_directory'), $img_name);
+
+                    $em->persist($person);
+                    $em->flush();
+
+                    $this->addFlash('success', 'Person updated');
+                    return $this->redirectToRoute('cms_show_person', ['id'=>$p_id]);
+                }
+                else
+                {
+                    $this->addFlash('warning', 'Chosen file must be an image (.jpg, .jpeg, .png)');
+                }
+            }
         }
 
         return $this->render('cms/person/edit.html.twig',[
-            'personForm' => $form->createView()
+            'personForm' => $form->createView(),
+            'image' => $if_image_exists,
         ]);
     }
     /**
      * @Route("/cms/person/delete/{id}", name="cms_delete_person")
      */
-    public function deleteMovieAction($id)
+    public function deletePersonAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $person = $em->getRepository('AppBundle:Person')->find($id);
 
         if (!$person) {
             throw $this->createNotFoundException(
-                'No movie found for id '.$id
+                'No person found for id '.$id
             );
         }
 
@@ -105,7 +140,7 @@ class PersonController extends Controller
     /**
      * @Route("/cms/person/{id}", name="cms_show_person")
      */
-    public function showMovieAction($id)
+    public function showPersonAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $person = $em->getRepository('AppBundle:Person')->find($id);

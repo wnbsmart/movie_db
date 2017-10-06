@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,10 @@ class PersonFormType extends AbstractType
                 'widget' => 'choice',
                 'years' => range(1900, 2017)
             ))
-            ->add('imagePath');
+            ->add('imagePath', FileType::class, array(
+                'label' => ' ',
+                'data_class' => null,
+                'required' => false));
     }
 
     public function configureOptions(OptionsResolver $resolver)
